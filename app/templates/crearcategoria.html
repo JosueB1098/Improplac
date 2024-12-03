@@ -1,0 +1,39 @@
+{% extends 'SubMenuAdmin.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Crear nueva categoría </h2>
+    <br>
+    <form action="{{ url_for('nuevo_categoria') }}" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.nombre.label(class="form-label") }}
+                {{ form.nombre(class="form-control", required=True) }}
+                {% if form.nombre.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.nombre.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.descripcion.label(class="form-label") }}
+                {{ form.descripcion(class="form-control", required=True) }}
+                {% if form.descripcion.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.descripcion.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Crear categoría</button>
+        <a href="{{ url_for('categorias') }}" class="btn btn-secondary ms-2">Cancelar</a>
+
+    </form>
+</div>
+{% endblock %}

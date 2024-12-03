@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+/* Estilos generales */
+body {
+    background-color: #f8f9fa; /* Fondo suave */
+    color: #333; /* Color de texto oscuro */
+    font-family: Arial, sans-serif; /* Fuente simple */
+}
+
+/* Contenedor principal */
+.container {
+    margin-top: 20px; /* Espacio superior */
+    max-width: 100%; /* Ancho máximo del contenedor */
+    padding: 15px; /* Espaciado interno */
+    margin-left: auto; /* Centrar el contenedor */
+    margin-right: auto; /* Centrar el contenedor */
+}
+
+/* Estilo de la tarjeta */
+.card {
+    border: none; /* Sin borde */
+    border-radius: 2px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Encabezado de la tarjeta */
+.card-header {
+    background-color: #1f2e6b; /* Azul oscuro */
+    color: white; /* Texto blanco */
+    font-size: 1.25rem; /* Tamaño de fuente */
+    padding: 15px; /* Espaciado */
+    border-top-left-radius: 8px; /* Bordes redondeados superiores */
+    border-top-right-radius: 8px; /* Bordes redondeados superiores */
+}
+
+/* Estilo del formulario */
+.form-group {
+    margin-bottom: 1.5rem; /* Espacio entre campos */
+}
+
+.form-control {
+    border: 1px solid #ced4da; /* Borde gris suave */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    transition: border-color 0.3s; /* Transición suave para el borde */
+}
+
+.form-control:focus {
+    border-color: #1f2e6b; /* Borde azul oscuro al enfocar */
+    box-shadow: 0 0 5px rgba(31, 46, 107, 0.5); /* Sombra al enfocar */
+}
+
+/* Estilo de la tabla de detalles */
+.table {
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse; /* Colapsar bordes */
+    margin-top: 15px; /* Espacio superior */
+}
+
+.table th, .table td {
+    padding: 12px; /* Espaciado interno */
+    text-align: left; /* Alinear texto a la izquierda */
+    border-bottom: 1px solid #dee2e6; /* Línea inferior sutil */
+}
+
+.table th {
+    background-color: #f8f9fa; /* Fondo suave para encabezados */
+    color: #1f2e6b; /* Texto azul oscuro */
+    font-weight: bold; /* Negrita para encabezados */
+     font-size: 0.875rem;
+}
+
+.table td {
+    background-color: white; /* Fondo blanco para celdas */
+    font-size: 0.675rem;
+}
+
+/* Estilo del botón */
+.btn-primary {
+    background-color: #1f2e6b; /* Azul oscuro */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    color: white; /* Texto blanco */
+    padding: 10px 15px; /* Espaciado interno */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.btn-primary:hover {
+    background-color: #26367c; /* Color más claro al pasar el mouse */
+}
+.mt-3 {
+    text-align: right; /* Alinear a la derecha */
+}
+
+.mt-3 p {
+    font-size: 0.875rem; /* Tamaño de fuente reducido */
+     margin: 5px 0; /* Espacio entre párrafos */
+}
+
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<br>
+<body>
+ {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-light shadow-sm">
+                    <div class="card-header text-center">
+                        <img src="{{ url_for('static', filename='img/improplac.png') }}" alt="Logo" width="70" height="70" class="d-inline-block align-text-top">
+                        <h3 class="d-inline-block ml-3">Registro de Pedido</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ url_for('datospago') }}" method="POST">
+                            {{ form.hidden_tag() }} <!-- Para incluir el token CSRF -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.nombre.label(class="form-label") }}
+                                        {{ form.nombre(class="form-control") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.correo.label(class="form-label") }}
+                                        {{ form.correo(class="form-control") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.direccion.label(class="form-label") }}
+                                        {{ form.direccion(class="form-control") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.telefono.label(class="form-label") }}
+                                        {{ form.telefono(class="form-control") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.cedula.label(class="form-label") }}
+                                        {{ form.cedula(class="form-control") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.ciudad.label(class="form-label") }}
+                                        {{ form.ciudad(class="form-control") }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h5>Detalles de Productos</h5>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in productos %}
+                                                <tr>
+                                                    <td>{{ item.producto.nombre }}</td>
+                                                    <td>{{ item.cantidad }}</td>
+                                                    <td>${{ item.producto.precio }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="mt-3">
+                                        <p><strong>Subtotal:</strong> ${{ subtotal }}</p>
+                                        <p><strong>IVA (12%):</strong> ${{ iva }}</p>
+                                        <p><strong>Total:</strong> ${{ total }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg" style="width: 50%; border-radius: 20px;">
+                                <i class="fas fa-check-circle"></i> Continuar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flashMessages = document.querySelectorAll('.flash-messages .alert');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500); // Tiempo para la animación de desvanecimiento
+                }, 2000); // Tiempo que el mensaje es visible
+            });
+        });
+    </script>
+
+{% endblock %}

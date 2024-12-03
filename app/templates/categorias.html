@@ -1,0 +1,115 @@
+{% extends 'SubMenuAdmin.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+<style>
+        .btn-info {
+    background-color: transparent; /* Fondo transparente */
+    color: #046cac; /* Color del texto */
+}
+
+.btn-info:hover {
+    background-color: rgba(23, 162, 184, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    color: #138496;
+}
+
+.btn-danger {
+    background-color: transparent; /* Fondo transparente */
+    color: ##0489ca; /* Color del texto */
+}
+
+.btn-danger:hover {
+    background-color: rgba(220, 53, 69, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    border-color: #c82333;
+    color: #c82333;
+}
+
+.btn i {
+    font-size: 1rem; /* Ajusta el tamaño del icono */
+    vertical-align: middle;
+    color: #0489ca; /* Color del icono */
+}
+
+.btn:hover i {
+    transform: scale(1.2); /* Aumenta el tamaño del icono al pasar el mouse */
+    transition: transform 0.3s;
+    color: #0056b3; /* Cambia el color del icono al pasar el mouse */
+}
+
+    </style>
+<body>
+<br>
+    <div style="display: flex; align-items: center;">
+        <h1>Gestión de Categorias</h1>
+
+ <a href="{{ url_for('nuevo_categoria') }}" class="btn btn-primary" style="margin-left: auto;">
+    <i class="bi bi-bag-check" style="color: white;" ></i>  Crear categoría <!-- Icono de producto -->
+</a>
+    </div>
+
+
+<form method="GET" class="form-inline mb-3" action="{{ url_for('categorias') }}">
+    <div class="input-group">
+        <input type="text" class="form-control" name="buscar" placeholder="Buscar categoria" value="{{ request.args.get('buscar', '') }}">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<h4>Categorias</h4>
+
+</body>
+<br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.nombre }}</td>
+                <td>{{ categoria.descripcion }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                         <div class="d-flex align-items-center">
+    <!-- Botón para editar -->
+   <a href="{{ url_for('editar_categoria', categoria_id=categoria.id) }}" class="btn btn-sm btn-info me-1">
+    <i class="bi bi-pencil"></i>
+</a>
+                        <form method="POST" action="/eliminar_categoria/{{ categoria.id }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta categoría?');">
+                            <input type="hidden" name="csrf_token">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {%- for page_num in categorias.iter_pages() %}
+            {% if categorias.page == page_num %}
+            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+            {% elif page_num %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('categorias', page=page_num) }}">{{ page_num }}</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+            {%- endfor %}
+        </ul>
+    </nav>
+
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+{% endblock%}

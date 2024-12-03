@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%block content%}
+ <link rel="stylesheet" href="/static/styles_login.css">
+
+<div class="container login-container">
+    <div class="login-box row">
+        <div class="col-md-6 d-flex justify-content-center align-items-center image-column">
+            <img src="{{ url_for('static', filename='img/improplac.png') }}" alt="Login Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 d-flex flex-column justify-content-center form-column">
+            <div class="login-text">Registro de Usuario</div>
+            <div class="subtext">Por favor, ingrese sus datos</div>
+            <form method="POST" class="w-100 mt-4">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control", placeholder="Correo electrónico") }}
+                    {% for error in form.email.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ form.password.label(class="form-label") }}
+                    {{ form.password(class="form-control", placeholder="Contraseña") }}
+                    {% for error in form.password.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ form.confirm_password.label(class="form-label") }}
+                    {{ form.confirm_password(class="form-control", placeholder="Confirmar contraseña") }}
+                    {% for error in form.confirm_password.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-login w-100">Registrarse</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

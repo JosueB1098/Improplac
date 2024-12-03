@@ -1,0 +1,147 @@
+ {% extends 'base.html' %}
+{% block content %}
+
+
+ <style>
+   .invoice-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .invoice-logo {
+            width: 70px;
+            height: 70px;
+        }
+        .invoice-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice-details,
+        .invoice-items {
+            margin-bottom: 30px;
+        }
+        .invoice-items table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .invoice-items th,
+        .invoice-items td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .invoice-items th {
+            background-color: #f8f9fa;
+        }
+        .invoice-total {
+            font-weight: bold;
+            text-align: right;
+        }
+
+ </style>
+
+     {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="invoice-header">
+            <img src="{{ url_for('static', filename='img/improplac.png') }}" alt="Logo" class="invoice-logo">
+            <div>
+                <h3 class="invoice-title">Orden de Pedido</h3>
+                <p><strong>Orden de Pedido #{{ numero_orden }}</strong></p>
+            </div>
+        </div>
+
+        <!-- Datos de la Persona -->
+        <div class="invoice-details">
+            <h5>Datos de la Persona</h5>
+            <p><strong>Nombre:</strong> {{ persona.nombre }}</p>
+            <p><strong>Correo:</strong> {{ persona.correo }}</p>
+            <p><strong>Dirección:</strong> {{ persona.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ persona.telefono }}</p>
+            <p><strong>Cédula:</strong> {{ persona.cedula }}</p>
+            <p><strong>Ciudad:</strong> {{ persona.ciudad }}</p>
+        </div>
+
+        <!-- Detalles de la Orden -->
+        <div class="invoice-items">
+            <h5>Detalles de la Orden</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio Unitario</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in productos %}
+                    <tr>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>${{ item.producto.precio }}</td>
+                        <td>${{ item.producto.precio * item.cantidad }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Totales -->
+        <div class="invoice-total">
+            <p>Subtotal: ${{ subtotal }}</p>
+            <p>IVA (12%): ${{ iva }}</p>
+            <p>Total: ${{ total }}</p>
+        </div>
+
+        <!-- Botones -->
+        <div class="invoice-buttons">
+            <a href="{{ url_for('index') }}" class="btn btn-danger">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+            <form action="{{ url_for('finalizar_pedido') }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Finalizar pedido
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flashMessages = document.querySelectorAll('.flash-messages .alert');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500); // Tiempo para la animación de desvanecimiento
+                }, 2000); // Tiempo que el mensaje es visible
+            });
+        });
+    </script>
+
+{% endblock %}

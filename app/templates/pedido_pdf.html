@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .details, .items {
+            width: 100%;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Pedido #{{ pedido.id }}</h1>
+        <p>Fecha: {{ pedido.fecha.strftime('%d/%m/%Y') }}</p>
+    </div>
+
+    <div class="details">
+        <h3>Cliente</h3>
+        <p>Nombre: {{ persona.nombre }}</p>
+        <p>Email: {{ persona.email }}</p>
+        <p>Teléfono: {{ persona.telefono }}</p>
+    </div>
+
+    <div class="items">
+        <h3>Detalles del Pedido</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pedido.items %}
+                <tr>
+                    <td>{{ item.producto.nombre }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>{{ "{:.2f}".format(item.precio_unitario) }}</td>
+                    <td>{{ "{:.2f}".format(item.total) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="summary">
+        <h3>Resumen</h3>
+        <p>Total: {{ "{:.2f}".format(pedido.total) }}</p>
+    </div>
+</body>
+</html>

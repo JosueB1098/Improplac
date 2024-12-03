@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+    .offer-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://planner5d.com/blog/content/images/2022/01/r-architecture-wDDfbanbhl8-unsplash-1.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: #fff;
+    }
+
+  /* Estilos para el botón personalizado */
+.btn-custom {
+    background-color: #26367c;
+    border-color: #26367c;
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: #007bff; /* Cambiar a tono de celeste o primary */
+    border-color: #007bff; /* Cambiar a tono de celeste o primary */
+    color: white;
+}
+
+/* Estilos para la tarjeta */
+.card {
+    border: none;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilos para el cuerpo de la tarjeta */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Estilos para el texto dentro de la tarjeta */
+.card-text {
+    font-size: 1.25rem;
+}
+
+/* Alinear elementos al final del cuerpo de la tarjeta */
+.card-body .d-flex {
+    margin-top: auto;
+}
+.search-input {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .search-button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .search-button:hover {
+      background-color: #0056b3;
+    }
+     .card-img {
+            width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+            height: 200px; /* Altura fija para todas las imágenes */
+            object-fit: cover; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+            border-bottom: 1px solid #ddd; /* Opcional: agrega un borde inferior a la imagen para separarla del contenido */
+        }
+        .card-body {
+            padding: 1rem; /* Ajusta el padding del contenido de la tarjeta */
+        }
+</style>
+ <!-- Mostrar mensajes flash -->
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+ <section class="offer-section">
+    <div class="container">
+        <h1>Catálogo</h1>
+{% if categoria_nombre %}
+    <h2>{{ categoria_nombre }}</h2>
+{% endif %}
+
+        <div class="search-form">
+            <form action="{{ url_for('search') }}" method="get">
+                <input type="text" name="q" class="search-input" placeholder="Buscar productos...">
+                <button type="submit" class="search-button"><i class="bi bi-search"></i> Buscar</button>
+            </form>
+        </div>
+    </div>
+
+
+</section>
+<br>
+  <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for producto in productos %}
+            <div class="col">
+                <div class="card h-100" style="cursor: pointer;" onclick="openProductPage('{{ producto.id }}')">
+                    {% if producto.imagen %}
+                        <img src="data:image/jpeg;base64,{{ producto.imagen|b64encode }}" class="card-img" alt="Imagen de {{ producto.nombre }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/600" class="card-img" alt="Imagen no disponible">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ producto.nombre }}</h5>
+                        <p class="card-text">{{ producto.descripcion }}</p>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <p class="card-text" style="font-size: 1.25rem;">Precio: <span class="fw-bold">${{ producto.precio }}</span></p>
+                        </div>
+                        <form action="{{ url_for('agregar_al_carrito', producto_id=producto.id) }}" method="POST">
+                            <button type="submit" class="btn btn-custom">
+                                <i class="bi bi-cart-plus"></i> Agregar al carrito
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+<script>
+function openProductPage(productId) {
+    window.location.href =`/individual/${productId}`;
+}
+</script>
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flashMessages = document.querySelectorAll('.flash-messages .alert');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500); // Tiempo para la animación de desvanecimiento
+                }, 2000); // Tiempo que el mensaje es visible
+            });
+        });
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+{% endblock %}

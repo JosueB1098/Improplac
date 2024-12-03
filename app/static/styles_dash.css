@@ -1,0 +1,50 @@
+/* Estilos personalizados para el panel de administración */
+
+/* Fondo blanco para todo el cuerpo */
+body {
+    background-color: #fff;
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    background-color: #fff; /* Fondo blanco */
+    color: #26367c; /* Texto negro */
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+    background-color: #fff; /* Fondo blanco */
+    color: #000; /* Texto negro */
+}
+
+/* Estilos para los enlaces del sidebar */
+.nav-link {
+    color: #000; /* Texto negro */
+}
+
+/* Estilos para el botón de cerrar sesión */
+.nav-item:last-child .nav-link {
+    color: #000; /* Texto negro */
+}
+
+/* Estilos para los enlaces del sidebar cuando están activos */
+.nav-link.active {
+    background-color: #007bff; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilos para los íconos dentro de los enlaces del sidebar */
+.nav-link i {
+    margin-right: 10px; /* Espacio a la derecha del ícono */
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+    background-color: #26367c; /* Fondo blanco */
+    color: #000; /* Texto negro */
+}
+thead {
+        background-color: #1e90ff; /* Azul oscuro */
+        color: #fff; /* Texto blanco */
+    }
+

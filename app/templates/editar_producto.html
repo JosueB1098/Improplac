@@ -1,0 +1,63 @@
+{% extends 'SubMenuAdmin.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Producto</h2>
+
+    <form method="POST" action="{{ url_for('editar_producto', producto_id=producto.id) }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ form.nombre.data }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ form.descripcion.data }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="precio" class="form-label">Precio:</label>
+                <input type="number" class="form-control" id="precio" name="precio" value="{{ form.precio.data }}" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" value="{{ form.cantidad.data }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="categoria_id" class="form-label">Categoría:</label>
+                <select class="form-control" id="categoria_id" name="categoria_id">
+                    {% for categoria_id, categoria_nombre in form.categoria_id.choices %}
+                        <option value="{{ categoria_id }}" {% if categoria_id == form.categoria_id.data %}selected{% endif %}>
+                            {{ categoria_nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="imagen" class="form-label">Imagen:</label>
+                <input type="file" class="form-control" id="imagen" name="imagen">
+                {% if producto.imagen %}
+                    <div class="mt-2">
+                        <strong>Imagen actual:</strong>
+                        <img src="data:image/png;base64,{{ producto.imagen | b64encode }}" alt="Producto" width="100">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+        <a href="{{ url_for('productos') }}" class="btn btn-secondary mt-3 ms-2">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

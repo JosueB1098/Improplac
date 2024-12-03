@@ -1,0 +1,234 @@
+{% extends "SubMenuAdmin.html" %}
+{% block content %}
+<!-- Incluye SweetAlert2 CSS y JS en el <head> -->
+<!-- Incluye SweetAlert2 CSS y JS en el <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SnPb0C+0C3Hp/Jm6Z9PcS2+K4jXa9gMPmaVls4S4FkEE6v/Jmzzz/57YJZMTEwX/"
+        crossorigin="anonymous">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-oHAw/i6l5wU7B2nDfsQJ3Z5atI3hzuQa72q9pYCSu4IUV5qPvPfVhSbVUQg84C5ZF5knm2W7BHQ6ZJ2ESSTJyA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom CSS -->
+    <style>
+        .dashboard-card {
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease-in-out;
+            text-align: center; /* Centrar el contenido */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            background-color: #f8f9fa; /* Color de fondo */
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Efecto de sombra al pasar el mouse */
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #1b4b72; /* Color azul oscuro */
+            margin-bottom: 10px; /* Espacio inferior */
+        }
+
+        .card-icon {
+            font-size: 2.5rem; /* Tamaño del ícono */
+            margin-right: 10px; /* Espacio a la derecha */
+            color: #1b4b72; /* Color azul oscuro */
+        }
+
+        .card-text {
+            font-size: 1.5rem; /* Tamaño del texto */
+            margin-bottom: 0; /* Sin espacio inferior */
+        }
+    </style>
+</head>
+
+<body>
+   <div class="container mt-5">
+        <!-- Fila con cards -->
+        <div class="row">
+            <!-- Card de Productos -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-box-open card-icon"></i> Productos</h5>
+                        <p class="card-text">{{ total_productos }} </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Usuarios -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-users card-icon"></i> Usuarios</h5>
+                        <p class="card-text">{{ total_usuarios }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card de Total de Ventas -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                     <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-dollar-sign card-icon"></i> Total Ventas</h5>
+                          <p class="card-text">{{ total_ventas }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfica de Ventas Mensuales -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chart-container">
+                    <canvas id="ventasChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Productos más vendidos -->
+         <div class="col-md-4">
+    <div class="card dashboard-card">
+        <div class="card-body">
+            <h5 class="card-title">Ventas Mensuales</h5>
+            <ul class="list-group">
+                {% for i in range(labels|length) %}
+                    <li class="list-group-item">
+                        {{ labels[i] }} <span class="badge ">${{ data[i]|round(2) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('pedidos') }}" class="btn btn-link mt-3">Ver más detalles</a>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+<div class="row mt-4">
+    <!-- Productos más vendidos -->
+<div class="col-md-4">
+    <div class="card dashboard-card shadow-sm border-0">
+        <div class="card-body">
+            <h5 class="card-title ">Productos más vendidos</h5>
+            <ul class="list-group list-group-flush">
+                {% for producto, total_vendido in productos_mas_vendidos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 py-3">
+                        <div class="d-flex align-items-center">
+                            {% if producto.imagen %}
+                                <img src="data:image/jpeg;base64,{{ producto.imagen|b64encode }}" alt="Imagen de {{ producto.nombre }}" class="img-fluid" style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px; margin-right: 10px;">
+                            {% else %}
+                                <img src="https://via.placeholder.com/40x40?text=No+Img" alt="Imagen no disponible" class="img-fluid" style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px; margin-right: 10px;">
+                            {% endif %}
+                            <span class="fw-semibold">{{ producto.nombre }}</span>
+                        </div>
+                      <span class="badge bg-dark text-white rounded-pill px-3 py-2">{{ total_vendido }} unidades</span>
+
+
+                    </li>
+                {% else %}
+                    <li class="list-group-item text-center text-muted">
+                        No hay productos vendidos aún.
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+   <!-- Editar Stock -->
+<!-- Editar Stock -->
+<!-- Editar Stock -->
+<div class="col-md-8">
+    <div class="card dashboard-card shadow-lg">
+        <div class="card-body">
+            <h5 class="card-title ">Productos con bajo stock</h5>
+            <table class="table table-hover table-bordered table-sm">
+                <thead class=" text-white">
+                    <tr>
+                        <th>#</th>
+                        <th>Producto</th>
+                        <th>Cantidad Actual</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos_bajo_stock %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.cantidad }}</td>
+                            <td>
+                                <!-- Formulario para editar el stock individualmente -->
+                                <form action="{{ url_for('editar_stock_producto', producto_id=producto.id) }}" method="post" class="d-flex align-items-center gap-3">
+                                    <div class="input-group" style="max-width: 200px;">
+                                        <input
+                                            type="number"
+                                            name="nuevo_stock"
+                                            class="form-control shadow-sm"
+                                            min="0"
+                                            value="{{ producto.cantidad }}"
+                                            required
+                                            style="border-radius: 0.375rem; border-color: #ced4da;">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm shadow-sm ms-3" style="border-radius: 0.375rem;">
+                                        <i class="bi bi-pencil-square me-1"></i> Editar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No hay productos con bajo stock.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+   </div>
+
+
+
+    <!-- Script para la gráfica de ventas -->
+    <script>
+        const ventasData = {
+            labels: {{ labels|tojson }},
+            datasets: [{
+                label: 'Ventas Mensuales',
+                data: {{ data|tojson }},
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: ventasData,
+            options: {}
+        };
+
+        var ventasChart = new Chart(document.getElementById('ventasChart'), config);
+    </script>
+
+    <!-- Bootstrap JS y Popper.js (necesarios para ciertos componentes de Bootstrap) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+
+{% endblock%}

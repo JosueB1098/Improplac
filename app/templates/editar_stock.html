@@ -1,0 +1,19 @@
+<!-- Formulario en el modal -->
+<form action="{{ url_for('actualizar_stock', producto_id=producto.id) }}" method="post">
+    <div class="mb-3">
+        <label for="cantidad-{{ producto.id }}" class="form-label">Nueva Cantidad</label>
+        <input
+            type="number"
+            class="form-control"
+            id="cantidad-{{ producto.id }}"
+            name="cantidad"
+            value="{{ producto.cantidad }}"
+            min="0"
+            required>
+    </div>
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+    </div>
+</form>

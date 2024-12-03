@@ -1,0 +1,39 @@
+{% extends 'SubMenuAdmin.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Editar Categoría: {{ categoria.nombre }}</h2>
+    <br>
+
+    <form method="POST" action="{{ url_for('editar_categoria', categoria_id=categoria.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ form.nombre.data }}" required>
+            {% if form.nombre.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.nombre.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ form.descripcion.data }}" required>
+            {% if form.descripcion.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.descripcion.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{{ url_for('categorias') }}" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

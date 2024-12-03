@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+
+   <style>
+     body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Color de fondo general */
+            color: #333;
+        }
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            flex: 1; /* Permite que el contenedor principal tome el espacio restante */
+            margin-top: 30px;
+            padding-bottom: 50px; /* Espacio para el footer */
+        }
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #003366; /* Azul oscuro */
+            color: white;
+            padding: 20px;
+            border-bottom: 1px solid #004080; /* Azul primario más claro */
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .card-text {
+            margin-bottom: 20px;
+        }
+        .table thead th {
+            background-color: #003366; /* Azul oscuro */
+            color: white;
+            text-align: center;
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: #e9ecef; /* Color claro para las filas impares */
+        }
+        .table tbody tr:hover {
+            background-color: #dbe2e8; /* Color de fondo para filas en hover */
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .user-icon {
+            font-size: 2rem;
+            /* Azul oscuro */
+            margin-right: 10px;
+        }
+        .estado-container {
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
+    .estado-pendiente {
+        background-color: yellow;
+        color: black;
+    }
+    .estado-procesando {
+        background-color: orange;
+    }
+    .estado-enviado {
+        background-color: green;
+    }
+
+    </style>
+<body>
+<div class="page-wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-person user-icon"></i> Perfil de Usuario</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Bienvenido, {{ current_user.email }}</h5>
+                <p class="card-text">Aquí puedes ver la lista de tus pedidos recientes.</p>
+
+                <!-- Tabla de Pedidos -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Número de Pedido</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Descargar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in facturas %}
+                        <tr>
+                            <th scope="row">{{ factura.id }}</th>
+                            <td>{{ factura.fecha.strftime('%d-%m-%Y %H:%M:%S') }}</td>
+                            <td>{{ factura.numero_pedido }}</td>
+                            <td>${{ "{:.2f}".format(factura.total) }}</td>
+                            <td>
+                                <div class="estado-container {% if factura.estado == 'Pendiente' %}estado-pendiente{% elif factura.estado == 'Procesando' %}estado-procesando{% elif factura.estado == 'Enviado' %}estado-enviado{% endif %}">
+                                    {{ factura.estado }}
+                                </div>
+                            </td>
+                            <td>
+                               <div class="text-center">
+    <a href="{{ url_for('descargar_pedido', id=factura.id) }}" class="btn btn-sm  me-1">
+        <i class="bi bi-download"></i>
+    </a>
+</div>
+
+
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5">No tienes pedidos recientes.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+</body>
+
+
+{% endblock %}

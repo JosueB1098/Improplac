@@ -1,0 +1,100 @@
+{% extends 'SubMenuAdmin.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+<style>
+        .btn-info {
+    background-color: transparent; /* Fondo transparente */
+    color: #046cac; /* Color del texto */
+}
+
+.btn-info:hover {
+    background-color: rgba(23, 162, 184, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    color: #138496;
+}
+
+.btn-danger {
+    background-color: transparent; /* Fondo transparente */
+    color: ##0489ca; /* Color del texto */
+}
+
+.btn-danger:hover {
+    background-color: rgba(220, 53, 69, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    border-color: #c82333;
+    color: #c82333;
+}
+
+.btn i {
+    font-size: 1rem; /* Ajusta el tamaño del icono */
+    vertical-align: middle;
+    color: #0489ca; /* Color del icono */
+}
+
+.btn:hover i {
+    transform: scale(1.2); /* Aumenta el tamaño del icono al pasar el mouse */
+    transition: transform 0.3s;
+    color: #0056b3; /* Cambia el color del icono al pasar el mouse */
+}
+
+        .card-img {
+            height: 200px; /* Ajusta la altura de la imagen según tu necesidad */
+            object-fit: cover; /* Ajusta la forma en que la imagen se ajusta al contenedor */
+        }
+
+
+    </style>
+<body>
+<br>
+    <div style="display: flex; align-items: center;">
+        <h1>Gestión de Carrusel</h1>
+
+
+    </div>
+
+
+</body>
+
+<h4>Carrusel</h4>
+
+
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        <!-- Card 1 -->
+        <div class="col">
+            <div class="card">
+               <img src="{{ url_for('static', filename='img/im1.jpg') }}"  class="d-block w-100" alt="Imagen 1">
+                <div class="card-body text-center">
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col">
+            <div class="card">
+               <img src="{{ url_for('static', filename='img/im1.jpg') }}"  class="d-block w-100" alt="Imagen 1">
+                <div class="card-body text-center">
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col">
+            <div class="card">
+                    <img src="{{ url_for('static', filename='img/im4.jpg') }}"  class="d-block w-100" alt="Imagen 4">
+                <div class="card-body text-center">
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="col">
+            <div class="card">
+               <img src="{{ url_for('static', filename='img/im2.jpg') }}"  class="d-block w-100" alt="Imagen 2">
+                <div class="card-body text-center">
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

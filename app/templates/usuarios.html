@@ -1,0 +1,122 @@
+{% extends 'SubMenuAdmin.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+<style>
+        .btn-info {
+    background-color: transparent; /* Fondo transparente */
+    color: #046cac; /* Color del texto */
+}
+
+.btn-info:hover {
+    background-color: rgba(23, 162, 184, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    color: #138496;
+}
+
+.btn-danger {
+    background-color: transparent; /* Fondo transparente */
+    color: ##0489ca; /* Color del texto */
+}
+
+.btn-danger:hover {
+    background-color: rgba(220, 53, 69, 0.2); /* Fondo semi-transparente al pasar el mouse */
+    border-color: #c82333;
+    color: #c82333;
+}
+
+.btn i {
+    font-size: 1rem; /* Ajusta el tamaño del icono */
+    vertical-align: middle;
+    color: #0489ca; /* Color del icono */
+}
+
+.btn:hover i {
+    transform: scale(1.2); /* Aumenta el tamaño del icono al pasar el mouse */
+    transition: transform 0.3s;
+    color: #0056b3; /* Cambia el color del icono al pasar el mouse */
+}
+
+    </style>
+<body>
+<br>
+    <div style="display: flex; align-items: center;">
+        <h1>Gestión de Cliente</h1>
+
+ <a href="{{ url_for('crear_persona') }}" class="btn btn-primary" style="margin-left: auto;">
+    <i class="bi bi-bag-check" style="color: white;" ></i>  Crear Cliente <!-- Icono de producto -->
+</a>
+    </div>
+
+
+
+<form method="GET" class="form-inline mb-3" action="{{ url_for('usuarios') }}">
+    <div class="input-group">
+        <input type="text" class="form-control" name="buscar" placeholder="Buscar cliente por cédula y nombre" value="{{ request.args.get('buscar', '') }}">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+</body>
+
+<h4>Clientes</h4>
+<table class="table">
+       <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>correo</th>
+        <th>Télefono</th>
+        <th>Acciones</th>
+
+    </tr>
+</thead>
+    <tbody>
+                {% for persona in personas %}
+                <tr>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.correo }}</td>
+                    <td>{{ persona.telefono }}</td>
+                    <td>
+                       <div class="d-flex align-items-center">
+    <!-- Botón para editar -->
+   <a href="{{ url_for('editar_persona', persona_id=persona.id) }}" class="btn btn-sm btn-info me-1">
+    <i class="bi bi-pencil"></i>
+</a>
+</div>
+
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay datos disponibles</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {%- for page_num in personas.iter_pages() %}
+        {% if personas.page == page_num %}
+        <li class="page-item active">
+            <span class="page-link">{{ page_num }}</span>
+        </li>
+        {% elif page_num %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('personas', page=page_num) }}">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">…</span>
+        </li>
+        {% endif %}
+        {%- endfor %}
+    </ul>
+</nav>
+
+
+{% endblock%}

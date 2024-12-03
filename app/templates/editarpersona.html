@@ -1,0 +1,80 @@
+{% extends 'SubMenuAdmin.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Cliente</h2>
+
+    <form method="POST" action="{{ url_for('editar_persona', persona_id=persona.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ form.nombre.data }}" required>
+                {% if form.nombre.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.nombre.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="direccion" class="form-label">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ form.direccion.data }}" required>
+                {% if form.direccion.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.direccion.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="telefono" class="form-label">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ form.telefono.data }}" required>
+                {% if form.telefono.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.telefono.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="cedula" class="form-label">Cédula:</label>
+                <input type="text" class="form-control" id="cedula" name="cedula" value="{{ form.cedula.data }}" required>
+                {% if form.cedula.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.cedula.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="ciudad" class="form-label">Ciudad:</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ form.ciudad.data }}" required>
+                {% if form.ciudad.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.ciudad.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+        <a href="{{ url_for('usuarios') }}" class="btn btn-secondary mt-3 ms-2">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

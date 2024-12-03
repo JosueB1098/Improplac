@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <style>
+        /* Estilos generales para el contenedor principal */
+.containers {
+    margin: 20px auto; /* Centrar horizontalmente y agregar espacio vertical */
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 1200px; /* Ancho máximo del contenedor */
+    text-align: center; /* Centrar texto y elementos internos */
+    overflow: hidden; /* Evitar contenido desbordado */
+}
+
+/* Estilos para el título de la sección */
+.section-title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #26367c;
+    font-weight: bold;
+}
+
+
+
+
+
+/* Ajuste de tamaño de íconos */
+.info-column i {
+    color: #007bff;
+
+}
+
+/* Estilos para los títulos de información */
+.info-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #26367c;
+}
+
+/* Estilos para el texto de información */
+.info-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Estilos para el separador */
+.separator {
+    margin: 20px 0;
+    height: 2px;
+    background-color: #e0e0e0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 767px) {
+    .info-column i {
+        font-size: 2.5rem; /* Ajuste de tamaño de íconos en pantallas pequeñas */
+    }
+
+    .info-title {
+        font-size: 1.2rem;
+    }
+
+    .info-text {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-column i {
+        font-size: 2rem; /* Ajuste de tamaño de íconos en pantallas muy pequeñas */
+    }
+
+    .info-title {
+        font-size: 1rem;
+    }
+
+    .info-text {
+        font-size: 0.8rem;
+    }
+}
+
+
+
+   .section-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #343a40;
+            position: relative;
+            text-align: left;
+        }
+
+        .section-title::after {
+            content: '';
+            text-align: left;
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: #009fe3;
+             margin: 10px 0 0;
+            border-radius: 2px;
+
+        }
+
+        .section-title span {
+            color: #007bb5;
+            font-weight: 400;
+            text-align: left;
+        }
+
+ .offer-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://planner5d.com/blog/content/images/2022/01/r-architecture-wDDfbanbhl8-unsplash-1.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: #fff;
+    }
+    </style>
+
+
+ <section class="offer-section">
+    <div class="containeraa">
+      <h1>¡Sucursales Improplac!</h1>
+    </div>
+  </section>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+<div class="separator"></div>
+
+<div class="containers" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="section-title">Matriz <span>Riobamba</span></h2>
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-md-4" data-aos="fade-right" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <img src="{{ url_for('static', filename='img/agencia.png') }}" alt="Logo" width="370" height="270">
+                </div>
+            </div>
+        </div>
+        <!-- Segunda columna -->
+ <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000">
+    <div class="info-container">
+        <div class="info-column">
+            <p class="info-title">Dirección</p>
+            <p class="info-text">
+                <i class="fas fa-map-marker-alt"></i> Dirección: Vía a San Luis, barrio La Floresta
+            </p>
+            <p class="info-text">Calles Alemania 11 y Grecia (esquina)</p>
+
+            <!-- Mapa de Google Maps -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.089146719807!2d-78.6429095!3d-1.6869261000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d3a9d7c9319bc5%3A0x7ba5714507ac038!2sIMPROPLAC%20GYPSUM!5e0!3m2!1ses!2sec!4v1733157320614!5m2!1ses!2sec" width="75%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Tercera columna -->
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Horarios</p>
+                    <p class="info-text">Lun - Jue: 8:00AM - 5:30PM</p>
+                    <p class="info-text">Vie: 8:00AM - 5:00PM</p>
+                    <p class="info-text">Sábados: 8:30 AM - 3:00 PM</p>
+                    <p class="info-text">Domingos Y Festivos: Cerrado</p>
+                    <p class="info-title">Contacto</p>
+                    <p class="info-text"> <i class="fas fa-phone-alt" style="color: #50ff00;"></i>  098498356 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="containers" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="section-title">Sucursal <span>Riobamba</span></h2>
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-md-4" data-aos="fade-right" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <img src="{{ url_for('static', filename='img/sucursalrio.png') }}" alt="Logo" width="370" height="270">
+                </div>
+            </div>
+        </div>
+        <!-- Segunda columna -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Dirección</p>
+                    <p class="info-text"> <i class="fas fa-map-marker-alt"></i> Dirección: Av. Leonidas Proaño</p>
+                    <p class="info-text"> Frente a la Subestación INECEL</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.0788720633193!2d-78.6927831117162!3d-1.6531244184873157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d307cffd718fc5%3A0x4cd6140cb0680f55!2sSubestaci%C3%B3n%20INECEL%2C%20Riobamba!5e0!3m2!1ses!2sec!4v1733157637687!5m2!1ses!2sec" width="75%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- Tercera columna -->
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Horarios</p>
+                    <p class="info-text">Lun - Jue: 8:00AM - 5:30PM</p>
+                    <p class="info-text">Vie: 8:00AM - 5:00PM</p>
+                    <p class="info-text">Sábados: 8:30 AM - 3:00 PM</p>
+                    <p class="info-text">Domingos Y Festivos: Cerrado</p>
+                    <p class="info-title">Contacto</p>
+                    <p class="info-text"> <i class="fas fa-phone-alt" style="color: #50ff00;"></i>  098498356 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="containers" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="section-title">Sucursal <span>Guaranda</span></h2>
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-md-4" data-aos="fade-right" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <img src="{{ url_for('static', filename='img/sucurguaranda.png') }}" alt="Logo" width="370" height="270">
+                </div>
+            </div>
+        </div>
+        <!-- Segunda columna -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Dirección</p>
+                    <p class="info-text"> <i class="fas fa-map-marker-alt"></i> Dirección: Av. Jhon F. Kennedy y Vía a la Costa</p>
+                    <p class="info-text"> Frente a la Plaza del Carnaval</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.268240737963!2d-79.00515722621148!3d-1.5971736360424535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d317cf150e80ad%3A0x66416e8b47497a61!2sPlaza%20de%20Carnaval!5e0!3m2!1ses!2sec!4v1733157707535!5m2!1ses!2sec" width="75%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- Tercera columna -->
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Horarios</p>
+                    <p class="info-text">Lun - Jue: 8:00AM - 5:30PM</p>
+                    <p class="info-text">Vie: 8:00AM - 5:00PM</p>
+                    <p class="info-text">Sábados: 8:30 AM - 3:00 PM</p>
+                    <p class="info-text">Domingos Y Festivos: Cerrado</p>
+                    <p class="info-title">Contacto</p>
+                    <p class="info-text"> <i class="fas fa-phone-alt" style="color: #50ff00;"></i>  098498356 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="containers" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="section-title">Sucursal <span>Guayaquil</span></h2>
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-md-4" data-aos="fade-right" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <img src="{{ url_for('static', filename='img/suguayas.png') }}" alt="Logo" width="370" height="270">
+                </div>
+            </div>
+        </div>
+        <!-- Segunda columna -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Dirección</p>
+                    <p class="info-text"> <i class="fas fa-map-marker-alt"></i> Dirección: Via a Daule k 1/2 junto al estacionamiento D.C.P </p>
+                    <p class="info-text"> Sector mercado la prosperina</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.026606925044!2d-79.94089372620748!3d-2.143491737161367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d737994141339%3A0x12891ee91b651459!2sIMPROPLAC%20Guayaquil!5e0!3m2!1ses!2sec!4v1733157509357!5m2!1ses!2sec" width="75%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- Tercera columna -->
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Horarios</p>
+                    <p class="info-text">Lun - Jue: 8:00AM - 5:30PM</p>
+                    <p class="info-text">Vie: 8:00AM - 5:00PM</p>
+                    <p class="info-text">Sábados: 8:30 AM - 3:00 PM</p>
+                    <p class="info-text">Domingos Y Festivos: Cerrado</p>
+                    <p class="info-title">Contacto</p>
+                    <p class="info-text"> <i class="fas fa-phone-alt" style="color: #50ff00;"></i>  098498356 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="containers" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="section-title">Franquisia <span>Milagro</span></h2>
+    <div class="row">
+        <!-- Primera columna -->
+        <div class="col-md-4" data-aos="fade-right" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <img src="{{ url_for('static', filename='img/milagrofra.png') }}" alt="Logo" width="370" height="270">
+                </div>
+            </div>
+        </div>
+        <!-- Segunda columna -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Dirección</p>
+                    <p class="info-text"> <i class="fas fa-map-marker-alt"></i> Dirección: Via a Daule k 1/2 junto al estacionamiento D.C.P </p>
+                    <p class="info-text"> Sector mercado la prosperina</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.995891383886!2d-79.6063609262074!3d-2.155252637190808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902d4734d255f16b%3A0x23b8d6ae04fc93f3!2simproplac%20gypsum-milagro!5e0!3m2!1ses!2sec!4v1733157414600!5m2!1ses!2sec" width="75%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- Tercera columna -->
+        <div class="col-md-4" data-aos="fade-left" data-aos-duration="1000">
+            <div class="info-container">
+                <div class="info-column">
+                    <p class="info-title">Horarios</p>
+                    <p class="info-text">Lun - Jue: 8:00AM - 5:30PM</p>
+                    <p class="info-text">Vie: 8:00AM - 5:00PM</p>
+                    <p class="info-text">Sábados: 8:30 AM - 3:00 PM</p>
+                    <p class="info-text">Domingos Y Festivos: Cerrado</p>
+                    <p class="info-title">Contacto</p>
+                    <p class="info-text"> <i class="fas fa-phone-alt" style="color: #50ff00;"></i>  098498356 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
