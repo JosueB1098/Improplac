@@ -100,6 +100,47 @@ body {
     font-size: 0.875rem; /* Tamaño de fuente reducido */
      margin: 5px 0; /* Espacio entre párrafos */
 }
+/* Mejora el diseño del campo de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 40px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #333;
+    line-height: 35px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 35px;
+}
+
+.select2-container--default .select2-dropdown {
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo cuando el campo está enfocado */
+.select2-container--default .select2-selection--single:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
 
 
 </style>
@@ -137,25 +178,38 @@ body {
                                         {{ form.nombre(class="form-control") }}
                                     </div>
                                     <div class="form-group">
-                                        {{ form.correo.label(class="form-label") }}
-                                        {{ form.correo(class="form-control") }}
-                                    </div>
+    <label class="form-label" for="correo">Correo</label>
+    <input
+        type="email"
+        id="correo"
+        name="correo"
+        class="form-control"
+        value="{{ current_user.email }}"
+        readonly
+    />
+</div>
+
                                     <div class="form-group">
                                         {{ form.direccion.label(class="form-label") }}
                                         {{ form.direccion(class="form-control") }}
                                     </div>
+                                    <div>
+        {{ form.telefono.label }} {{ form.telefono(class="form-control") }}
+        {% if form.telefono.errors %}
+            <span class="text-danger">{{ form.telefono.errors[0] }}</span>
+        {% endif %}
+    </div>
+                                     <div>
+        {{ form.cedula.label }} {{ form.cedula(class="form-control") }}
+        {% if form.cedula.errors %}
+            <span class="text-danger">{{ form.cedula.errors[0] }}</span>
+        {% endif %}
+    </div>
                                     <div class="form-group">
-                                        {{ form.telefono.label(class="form-label") }}
-                                        {{ form.telefono(class="form-control") }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.cedula.label(class="form-label") }}
-                                        {{ form.cedula(class="form-control") }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.ciudad.label(class="form-label") }}
-                                        {{ form.ciudad(class="form-control") }}
-                                    </div>
+    {{ form.ciudad.label(class="form-label") }}
+    {{ form.ciudad(class="form-control select2") }}
+</div>
+
                                 </div>
 
                                 <div class="col-md-6">
@@ -196,10 +250,21 @@ body {
     </div>
 
     <!-- Scripts -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Selecciona una ciudad",
+            allowClear: true
+        });
+    });
+</script>
+
 <script>
         document.addEventListener("DOMContentLoaded", function() {
             const flashMessages = document.querySelectorAll('.flash-messages .alert');

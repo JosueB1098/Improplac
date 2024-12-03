@@ -97,148 +97,153 @@
 
 </style>
 <body>
-
-   <div class="container my-4">
+    <div class="container my-4">
         <div class="row mb-4">
             <div class="col-12 d-flex align-items-center">
                 <h1>Gestión de Pedidos</h1>
             </div>
-        </div><div class="row mb-4">
-    <!-- Card de Total de Pedidos -->
-    <div class="col-md-4">
-        <div class="card dashboard-card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-clipboard-list card-icon"></i> Total de Pedidos
-                </h5>
-                <p class="card-text" style="font-weight: bold;">{{ total_pedidos }}</p>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Card de Total de Pedidos -->
+            <div class="col-md-4">
+                <div class="card dashboard-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-clipboard-list card-icon"></i> Total de Pedidos
+                        </h5>
+                        <p class="card-text" style="font-weight: bold;">{{ total_pedidos }}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Card de Monto Total -->
-    <div class="col-md-4">
-        <div class="card dashboard-card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-dollar-sign card-icon"></i> Monto Total
-                </h5>
-                <p class="card-text" style="font-weight: bold;">${{ total_monto|round(2) }}</p>
+            <!-- Card de Monto Total -->
+            <div class="col-md-4">
+                <div class="card dashboard-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-dollar-sign card-icon"></i> Monto Total
+                        </h5>
+                        <p class="card-text" style="font-weight: bold;">${{ total_monto|round(2) }}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-  <div class="col-md-4">
-    <div class="card shadow-sm border-0" style="border-radius: 12px; background-color: #f9f9f9;">
-        <div class="card-body">
-            <h4 class="card-title mb-4 ">
-                <i class="fas fa-filter me-2"></i> Filtrar Pedidos
-            </h4>
-            <form method="get" action="{{ url_for('pedidos') }}">
-                <!-- Mes Selector -->
-                <div class="mb-4">
-                    <label for="mes" class="form-label text-secondary fw-bold">Seleccionar Mes: </label>
-                    <select id="mes" name="mes" class="form-select form-control-sm shadow-sm" style="font-size: 14px; padding: 0.25rem 0.5rem;">
-                        <option value="" disabled selected>Elige un mes</option>
-                        <option value="1" {% if request.args.get('mes') == '1' %}selected{% endif %}>Enero</option>
-                        <option value="2" {% if request.args.get('mes') == '2' %}selected{% endif %}>Febrero</option>
-                        <option value="3" {% if request.args.get('mes') == '3' %}selected{% endif %}>Marzo</option>
-                        <option value="4" {% if request.args.get('mes') == '4' %}selected{% endif %}>Abril</option>
-                        <option value="5" {% if request.args.get('mes') == '5' %}selected{% endif %}>Mayo</option>
-                        <option value="6" {% if request.args.get('mes') == '6' %}selected{% endif %}>Junio</option>
-                        <option value="7" {% if request.args.get('mes') == '7' %}selected{% endif %}>Julio</option>
-                        <option value="8" {% if request.args.get('mes') == '8' %}selected{% endif %}>Agosto</option>
-                        <option value="9" {% if request.args.get('mes') == '9' %}selected{% endif %}>Septiembre</option>
-                        <option value="10" {% if request.args.get('mes') == '10' %}selected{% endif %}>Octubre</option>
-                        <option value="11" {% if request.args.get('mes') == '11' %}selected{% endif %}>Noviembre</option>
-                        <option value="12" {% if request.args.get('mes') == '12' %}selected{% endif %}>Diciembre</option>
-                    </select>
-                </div>
-                <!-- Estado Selector -->
-                <div class="mb-4">
-                    <label for="estado" class="form-label text-secondary fw-bold">Seleccionar Estado</label>
-                    <select id="estado" name="estado"class="form-select form-control-sm shadow-sm" style="font-size: 14px; padding: 0.25rem 0.5rem;">
-                        <option value="" disabled selected>Elige un estado</option>
-                        <option value="Pendiente" {% if request.args.get('estado') == 'Pendiente' %}selected{% endif %}>Pendiente</option>
-                        <option value="Procesando" {% if request.args.get('estado') == 'Procesando' %}selected{% endif %}>Procesando</option>
-                        <option value="Enviado" {% if request.args.get('estado') == 'Enviado' %}selected{% endif %}>Enviado</option>
-                    </select>
-                </div>
-                <!-- Submit Button -->
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg shadow-sm" style="border-radius: 8px;">
-                        <i class="fas fa-search me-2"></i> Filtrar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+            <!-- Card de Filtrar Pedidos -->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0" style="border-radius: 12px; background-color: #f9f9f9;">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4 ">
+                            <i class="fas fa-filter me-2"></i> Filtrar Pedidos
+                        </h4>
+                        <form method="get" action="{{ url_for('pedidos') }}">
+                            <!-- Mes Selector -->
+                            <div class="mb-4">
+                                <label for="mes" class="form-label text-secondary fw-bold">Seleccionar Mes: </label>
+                                <select id="mes" name="mes" class="form-select form-control-sm shadow-sm" style="font-size: 14px; padding: 0.25rem 0.5rem;">
+                                    <option value="" disabled selected>Elige un mes</option>
+                                    <option value="1" {% if request.args.get('mes', type=int) == 1 %}selected{% endif %}>Enero</option>
+                                    <option value="2" {% if request.args.get('mes') == '2' %}selected{% endif %}>Febrero</option>
+                                    <option value="3" {% if request.args.get('mes') == '3' %}selected{% endif %}>Marzo</option>
+                                    <option value="4" {% if request.args.get('mes') == '4' %}selected{% endif %}>Abril</option>
+                                    <option value="5" {% if request.args.get('mes') == '5' %}selected{% endif %}>Mayo</option>
+                                    <option value="6" {% if request.args.get('mes') == '6' %}selected{% endif %}>Junio</option>
+                                    <option value="7" {% if request.args.get('mes') == '7' %}selected{% endif %}>Julio</option>
+                                    <option value="8" {% if request.args.get('mes') == '8' %}selected{% endif %}>Agosto</option>
+                                    <option value="9" {% if request.args.get('mes') == '9' %}selected{% endif %}>Septiembre</option>
+                                    <option value="10" {% if request.args.get('mes') == '10' %}selected{% endif %}>Octubre</option>
+                                    <option value="11" {% if request.args.get('mes') == '11' %}selected{% endif %}>Noviembre</option>
+                                    <option value="12" {% if request.args.get('mes') == '12' %}selected{% endif %}>Diciembre</option>
+                                </select>
+                            </div>
 
-</div>
+                            <!-- Estado Selector -->
+                            <div class="mb-4">
+                                <label for="estado" class="form-label text-secondary fw-bold">Seleccionar Estado</label>
+                                <select id="estado" name="estado" class="form-select form-control-sm shadow-sm" style="font-size: 14px; padding: 0.25rem 0.5rem;">
+                                    <option value="" disabled selected>Elige un estado</option>
+                                    <option value="Pendiente" {% if request.args.get('estado') == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                                    <option value="Procesando" {% if request.args.get('estado') == 'Procesando' %}selected{% endif %}>Procesando</option>
+                                    <option value="Enviado" {% if request.args.get('estado') == 'Enviado' %}selected{% endif %}>Enviado</option>
+                                </select>
+                            </div>
 
-
-    <h4> Listado de Pedidos</h4>
-
-   <table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Carrito ID</th>
-            <th>Persona </th>
-            <th>Total</th>
-            <th>Fecha</th>
-            <th>Número de Pedido</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for factura in facturas %}
-        <tr>
-            <td>{{ factura.id }}</td>
-            <td>{{ factura.carrito_id }}</td>
-             <td>{{ factura.persona_nombre }}</td>
-            <td>{{ "{:.2f}".format(factura.total) }}</td>
-            <td>{{ factura.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-            <td>{{ factura.numero_pedido }}</td>
-           <td>
-    <form method="POST" action="{{ url_for('actualizar_estado_pedido', id=factura.id) }}">
-        <select name="estado" class="form-select form-select-sm estado-dropdown {% if factura.estado == 'Pendiente' %}pendiente{% elif factura.estado == 'Procesando' %}procesando{% elif factura.estado == 'Enviado' %}enviado{% endif %}" onchange="this.form.submit()">
-            <option value="Pendiente" {% if factura.estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
-            <option value="Procesando" {% if factura.estado == 'Procesando' %}selected{% endif %}>Procesando</option>
-            <option value="Enviado" {% if factura.estado == 'Enviado' %}selected{% endif %}>Enviado</option>
-        </select>
-    </form>
-</td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <a href="{{ url_for('descargar_pedido', id=factura.id) }}" class="btn btn-sm btn-info me-1">
-    <i class="bi bi-download"></i>
-</a>
-
-                    <form method="POST" action="/eliminar_pedido/{{ factura.id }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pedido?');">
-                            <input type="hidden" name="csrf_token">
-                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg shadow-sm" style="border-radius: 8px;">
+                                    <i class="fas fa-search me-2"></i> Filtrar
+                                </button>
+                            </div>
                         </form>
+                    </div>
                 </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </div>
+        </div>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            {%- for page_num in facturas.iter_pages() %}
-            {% if facturas.page == page_num %}
-            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
-            {% elif page_num %}
-            <li class="page-item"><a class="page-link" href="{{ url_for('pedidos', page=page_num) }}">{{ page_num }}</a></li>
-            {% else %}
-            <li class="page-item disabled"><span class="page-link">…</span></li>
-            {% endif %}
-            {%- endfor %}
-        </ul>
-    </nav>
+        <h4>Listado de Pedidos</h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Carrito ID</th>
+                    <th>Persona</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Número de Pedido</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for factura in facturas %}
+                <tr>
+                    <td>{{ factura.id }}</td>
+                    <td>{{ factura.carrito_id }}</td>
+                    <td>{{ factura.persona_nombre }}</td>
+                    <td>{{ "{:.2f}".format(factura.total) }}</td>
+                    <td>{{ factura.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ factura.numero_pedido }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('actualizar_estado_pedido', id=factura.id) }}">
+                            <select name="estado" class="form-select form-select-sm estado-dropdown {% if factura.estado == 'Pendiente' %}pendiente{% elif factura.estado == 'Procesando' %}procesando{% elif factura.estado == 'Enviado' %}enviado{% endif %}" onchange="this.form.submit()">
+                                <option value="Pendiente" {% if factura.estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                                <option value="Procesando" {% if factura.estado == 'Procesando' %}selected{% endif %}>Procesando</option>
+                                <option value="Enviado" {% if factura.estado == 'Enviado' %}selected{% endif %}>Enviado</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ url_for('descargar_pedido', id=factura.id) }}" class="btn btn-sm btn-info me-1">
+                                <i class="bi bi-download"></i>
+                            </a>
+
+                            <form method="POST" action="/eliminar_pedido/{{ factura.id }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pedido?');">
+                                <input type="hidden" name="csrf_token">
+                                <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% for page_num in facturas.iter_pages() %}
+                    {% if facturas.page == page_num %}
+                        <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                    {% elif page_num %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('pedidos', page=page_num) }}">{{ page_num }}</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</body>
+
 {% endblock %}

@@ -229,7 +229,7 @@ def inject_cart_count():
 
 
 
-def calcular_iva(subtotal, tasa_iva=0.12):  # 12% de IVA por defecto
+def calcular_iva(subtotal, tasa_iva=0.15):  # 12% de IVA por defecto
     return subtotal * tasa_iva
 
 
@@ -588,12 +588,14 @@ def carrito():
 
     # Calcular subtotal, IVA y total
     subtotal = 0
+    totalmaximo=0
     for prod in productos:
         producto = Producto.query.get(prod.producto_id)
         if producto:
-            subtotal += producto.precio * prod.cantidad
+            subtotal += producto.precio * prod.cantidad * (1 - 0.15)
+            totalmaximo += producto.precio * prod.cantidad
 
-    iva = round(subtotal * 0.12, 2)  # Supongamos que el IVA es del 12%
+    iva = round(totalmaximo * 0.15, 2)  # Supongamos que el IVA es del 12%
     total = round(subtotal + iva, 2)
 
     # Obtener cualquier otro contexto necesario
@@ -703,20 +705,95 @@ def obtener_carrito_actual():
     return Carrito.query.filter_by(usuario_id=current_user.id).first()
 
 
+CIUDADES_ECUADOR = [
+    ("Quito", "Quito"),
+    ("Guayaquil", "Guayaquil"),
+    ("Cuenca", "Cuenca"),
+    ("Santo Domingo", "Santo Domingo"),
+    ("Machala", "Machala"),
+    ("Manta", "Manta"),
+    ("Portoviejo", "Portoviejo"),
+    ("Ambato", "Ambato"),
+    ("Riobamba", "Riobamba"),
+    ("Loja", "Loja"),
+    ("Ibarra", "Ibarra"),
+    ("Latacunga", "Latacunga"),
+    ("Esmeraldas", "Esmeraldas"),
+    ("Tulcán", "Tulcán"),
+    ("Otavalo", "Otavalo"),
+    ("Azogues", "Azogues"),
+    ("Biblián", "Biblián"),
+    ("La Troncal", "La Troncal"),
+    ("Guaranda", "Guaranda"),
+    ("San Miguel", "San Miguel"),
+    ("Chillanes", "Chillanes"),
+    ("Santa Rosa", "Santa Rosa"),
+    ("Huaquillas", "Huaquillas"),
+    ("Pasaje", "Pasaje"),
+    ("Zaruma", "Zaruma"),
+    ("Arenillas", "Arenillas"),
+    ("Baños de Agua Santa", "Baños de Agua Santa"),
+    ("Pelileo", "Pelileo"),
+    ("Nueva Loja", "Nueva Loja"),
+    ("Shushufindi", "Shushufindi"),
+    ("Cuyabeno", "Cuyabeno"),
+    ("Puerto Ayora", "Puerto Ayora"),
+    ("Puerto Baquerizo Moreno", "Puerto Baquerizo Moreno"),
+    ("Puerto Villamil", "Puerto Villamil"),
+    ("Catamayo", "Catamayo"),
+    ("Macará", "Macará"),
+    ("Vilcabamba", "Vilcabamba"),
+    ("Babahoyo", "Babahoyo"),
+    ("Quevedo", "Quevedo"),
+    ("Ventanas", "Ventanas"),
+    ("Vinces", "Vinces"),
+    ("Chone", "Chone"),
+    ("Jipijapa", "Jipijapa"),
+    ("Montecristi", "Montecristi"),
+    ("Macas", "Macas"),
+    ("Gualaquiza", "Gualaquiza"),
+    ("Sucúa", "Sucúa"),
+    ("Tena", "Tena"),
+    ("Archidona", "Archidona"),
+    ("Misahuallí", "Misahuallí"),
+    ("Coca", "Coca"),
+    ("Dayuma", "Dayuma"),
+    ("Pompeya", "Pompeya"),
+    ("Puyo", "Puyo"),
+    ("Shell", "Shell"),
+    ("Arajuno", "Arajuno"),
+    ("Sangolquí", "Sangolquí"),
+    ("Machachi", "Machachi"),
+    ("Cayambe", "Cayambe"),
+    ("San Antonio de Pichincha", "San Antonio de Pichincha"),
+    ("La Libertad", "La Libertad"),
+    ("Salinas", "Salinas"),
+    ("La Concordia", "La Concordia"),
+    ("Guano", "Guano"),
+    ("Penipe", "Penipe"),
+    ("Alausí", "Alausí"),
+    ("Chunchi", "Chunchi"),
+    ("Zamora", "Zamora"),
+    ("Yantzaza", "Yantzaza"),
+    ("Nangaritza", "Nangaritza"),
+]
 
 @app.route('/datospago', methods=['GET', 'POST'])
 @login_required  # Asegúrate de que el usuario esté logueado
 def datospago():
+
     productos = obtener_productos_del_carrito()
     if not productos:
         flash('Tu carrito está vacío. Por favor, agrega productos antes de proceder a realizar el pedido.', 'warning')
         return redirect(url_for('carrito'))
 
-    subtotal = calcular_subtotal(productos)
-    iva = calcular_iva(subtotal)
-    total = subtotal + iva
+    subtotal = calcular_subtotal(productos) * (1 - 0.15)
+    totalmaximo =calcular_subtotal(productos)
+    iva = calcular_iva(totalmaximo)
+    total = (subtotal + iva)
 
     form = PersonaForm()
+    form.ciudad.choices = CIUDADES_ECUADOR
 
     # Obtener el correo electrónico del usuario logueado
     user_email = current_user.email
@@ -789,9 +866,9 @@ def datospago():
 
     context = {
         'productos': productos,
-        'subtotal': subtotal,
-        'iva': iva,
-        'total': total,
+        'subtotal': format(subtotal, '.2f'),
+        'iva': format(iva, '.2f'),
+        'total': format(total, '.2f'),
         'form': form
     }
 
@@ -815,8 +892,9 @@ def factura():
         return redirect(url_for('datospago'))
 
     # Calcular subtotal, IVA y total
-    subtotal = calcular_subtotal(productos_carrito)
-    iva = calcular_iva(subtotal)
+    subtotal = calcular_subtotal(productos_carrito) * (1 - 0.15)
+    totalmaximo=calcular_subtotal(productos_carrito)
+    iva = calcular_iva(totalmaximo)
     total = subtotal + iva
 
     # Generar un número de orden de pedido aleatorio
@@ -941,8 +1019,6 @@ def perfil():
 from datetime import datetime
 from sqlalchemy import extract
 
-from datetime import datetime
-from sqlalchemy import extract
 
 @app.route('/pedidos', methods=['GET', 'POST'])
 @login_required

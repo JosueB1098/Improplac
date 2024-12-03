@@ -41,15 +41,58 @@ class formproducto(FlaskForm):
     categoria = SelectField('Categoría', choices=[('pisos', 'Pisos'), ('pisos', 'Pisos')], validators=[DataRequired()])
     imagen = FileField('Imagen')
     submit = SubmitField('Crear producto')
+def validar_cedula_ecuador(cedula):
+    """
+    Verifica si una cédula ecuatoriana es válida.
+    """
+    if len(cedula) != 10 or not cedula.isdigit():
+        return False
 
+    provincia = int(cedula[:2])
+    if provincia < 1 or provincia > 24:
+        return False
+
+    digitos = list(map(int, cedula))
+    coeficientes = [2, 1] * 5
+    suma = 0
+
+    for i in range(9):
+        producto = digitos[i] * coeficientes[i]
+        suma += producto if producto < 10 else producto - 9
+
+    verificador = 10 - (suma % 10) if suma % 10 != 0 else 0
+    return verificador == digitos[-1]
+
+def validar_telefono_ecuador(telefono):
+    """
+    Verifica si un número de teléfono ecuatoriano es válido.
+    """
+    if len(telefono) not in [9, 10] or not telefono.isdigit():
+        return False
+
+    if len(telefono) == 9 and telefono.startswith('2'):  # Teléfonos fijos
+        return True
+
+    if len(telefono) == 10 and telefono.startswith('09'):  # Celulares
+        return True
+
+    return False
 class PersonaForm(FlaskForm):
-    nombre = StringField('Nombre', validators=[DataRequired(), Length(max=100)])
-    correo = EmailField('Correo', validators=[DataRequired(), Email()])
-    direccion = StringField('Dirección', validators=[DataRequired(), Length(max=200)])
-    telefono = StringField('Teléfono', validators=[DataRequired(), Length(max=15)])  # Ajusta el máximo según tus necesidades
-    cedula = StringField('Número de Cédula', validators=[DataRequired(), Length(max=20)])
-    ciudad = StringField('Ciudad', validators=[DataRequired(), Length(max=100)])
-    submit = SubmitField('Registrar Persona')
+    nombre = StringField('Nombre', validators=[DataRequired(), Length(min=3, max=100)])
+    correo = StringField('Correo', validators=[DataRequired(), Email()])
+    direccion = StringField('Dirección', validators=[DataRequired(), Length(min=5, max=200)])
+    telefono = StringField('Teléfono', validators=[DataRequired(), Length(min=9, max=10)])
+    cedula = StringField('Cédula', validators=[DataRequired(), Length(min=10, max=10)])
+    ciudad = SelectField('Ciudad', choices=[], validators=[DataRequired()])
+    submit = SubmitField('Guardar')
+
+    def validate_cedula(form, field):
+        if not validar_cedula_ecuador(field.data):
+            raise ValidationError('La cédula ingresada no es válida.')
+
+    def validate_telefono(form, field):
+        if not validar_telefono_ecuador(field.data):
+            raise ValidationError('El número de teléfono ingresado no es válido.')
 
 class EditarPersonaForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired()])
